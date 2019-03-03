@@ -23,17 +23,24 @@ var dbSessions = map[string]string{} // session ID, user ID
 func init() {
 	tpl = template.Must(template.ParseGlob("templates/*"))
 	bs, _ := bcrypt.GenerateFromPassword([]byte("password"), bcrypt.MinCost)
-	dbUsers["test@test.com"] = user{"test@test.com", bs, "James", "B"}
+	dbUsers["test@test.com"] = user{"test@test.com", bs, "Jana", "O"}
 }
 
 func main() {
 	http.HandleFunc("/", index)
-	http.HandleFunc("/plants", plants)
+	http.HandleFunc("/upload", upload)
+	http.HandleFunc("/account", account)
 	http.HandleFunc("/signup", signup)
 	http.HandleFunc("/login", login)
 	http.HandleFunc("/logout", logout)
+
+	// http.Handle("/css/", http.FileServer(http.Dir("css/")))
+
 	// ========== >>>> ADD FAVICON ==========================
 	http.Handle("/favicon.ico", http.NotFoundHandler())
+	http.Handle("/public/", http.StripPrefix("/public", http.FileServer(http.Dir("./public"))))
+	http.Handle("/assets/", http.StripPrefix("/assets", http.FileServer(http.Dir("./assets"))))
+
 	http.ListenAndServe(":8080", nil)
 
 	fmt.Println("dbUsers:", dbUsers)
@@ -41,18 +48,28 @@ func main() {
 
 func index(w http.ResponseWriter, req *http.Request) {
 	u := getUser(w, req)
-	tpl.ExecuteTemplate(w, "index.gohtml", u)
+	tpl.ExecuteTemplate(w, "index.html", u)
 }
 
-func plants(w http.ResponseWriter, req *http.Request) {
+func account(w http.ResponseWriter, req *http.Request) {
 	u := getUser(w, req)
 	if !alreadyLoggedIn(req) {
 		http.Redirect(w, req, "/", http.StatusSeeOther)
 		return
 	}
-	tpl.ExecuteTemplate(w, "plants.gohtml", u)
+	tpl.ExecuteTemplate(w, "account.gohtml", u)
 }
 
+// func myUpload(w http.ResponseWriter, req *http.Request) {
+// 	u := getUser(w, req)
+// 	if !alreadyLoggedIn(req) {
+// 		http.Redirect(w, req, "/", http.StatusSeeOther)
+// 		return
+// 	}
+// 	tpl.ExecuteTemplate(w, "upload.gohtml", u)
+// }
+
+// TODO: save in DB ===========!!!
 func signup(w http.ResponseWriter, req *http.Request) {
 	if alreadyLoggedIn(req) {
 		http.Redirect(w, req, "/", http.StatusSeeOther)

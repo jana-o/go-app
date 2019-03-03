@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload</title>
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"
+    />
+</head>
+<body>
+
+<div>
+    <h1>Your Pictures:</h1>
+
+    {{range .}}
+    <img src="/public/pics/{{.}}" width="400px">
+    {{end}}
+
+    
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="nf">
+        <input type="submit">
+    </form>
+</div>
+
+<div>
+    <h4><a href="/">back</a></h4>
+    <h4><a href="/logout">log out</a></h4>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Account</title>
+  <link rel="stylesheet" href="../public/css/main.css" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"
+    />
+</head>
+
+<body>
+  <div>
+    <h1>{{.First}}'s Account details</h1>
+  </div>
+  
+  <div class="image">
+    <img
+      src="../assets/img/profile.png"
+      alt="Profile picture"
+      style="width:50%"/>
+  </div>  <br><br>
+  
+  <div>
+    First Name: {{.First}}<br>
+    Last Name: {{.Last}}<br>
+    Username: {{.UserName}}<br>
+    Password: {{.Password}}<br>
+  </div>
+
+  <div>
+    <h4><a href="/">back</a></h4>
+    <h4><a href="/logout">log out</a></h4>
+  </div>
+
+</body>
+</html>
