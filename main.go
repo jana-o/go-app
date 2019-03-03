@@ -34,9 +34,6 @@ func main() {
 	http.HandleFunc("/login", login)
 	http.HandleFunc("/logout", logout)
 
-	// http.Handle("/css/", http.FileServer(http.Dir("css/")))
-
-	// ========== >>>> ADD FAVICON ==========================
 	http.Handle("/favicon.ico", http.NotFoundHandler())
 	http.Handle("/public/", http.StripPrefix("/public", http.FileServer(http.Dir("./public"))))
 	http.Handle("/assets/", http.StripPrefix("/assets", http.FileServer(http.Dir("./assets"))))
@@ -59,15 +56,6 @@ func account(w http.ResponseWriter, req *http.Request) {
 	}
 	tpl.ExecuteTemplate(w, "account.gohtml", u)
 }
-
-// func myUpload(w http.ResponseWriter, req *http.Request) {
-// 	u := getUser(w, req)
-// 	if !alreadyLoggedIn(req) {
-// 		http.Redirect(w, req, "/", http.StatusSeeOther)
-// 		return
-// 	}
-// 	tpl.ExecuteTemplate(w, "upload.gohtml", u)
-// }
 
 // TODO: save in DB ===========!!!
 func signup(w http.ResponseWriter, req *http.Request) {

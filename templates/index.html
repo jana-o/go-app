@@ -11,26 +11,33 @@
   </head>
 
   <body>
-    <div class="container-fluid">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Plant diary</a>
+        </div>
+        {{if .First}}
+        <ul class="nav navbar-nav">
+          <li><a href="/upload">Upload new photos</a></li>
+          <li><a href="/account">Account</a></li>
+          <li><a href="/logout">Log out</a></li>
+        </ul>
+        
+        {{else}}
+        <ul class="nav navbar-nav">
+          <li><a href="/signup">Sign up now!</a></li>
+          <li><a href="/login">Log in</a></li>
+          {{ end }}
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
       <div class="row">
         {{if .First}}
         <div>
-          <h1>Hi, {{.First}}</h1>
+          <h1>Hi, {{.First}}!</h1>
         </div>
-
-        <div>
-          <h4><a href="/upload">Upload new pictures</a></h4>
-
-          <h4><a href="/account">Account</a></h4>
-          <h4><a href="/logout">Log out</a></h4>
-        </div>
-
-        {{else}}
-        <div>
-          <h4><a href="/signup">Sign up</a></h4>
-          <h4><a href="/login">Log in</a></h4>
-        </div>
-      </div>
       {{ end }}
 
       <div class="row">

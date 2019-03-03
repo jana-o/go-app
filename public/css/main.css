@@ -14,7 +14,10 @@ body {
   clear: both;
 }
 
-.image {
-  float: left;
-  width: 33.33%;
+.row {
+  padding: 15px;
+}
+
+.container {
+  margin: 10px;
 }

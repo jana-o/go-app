@@ -11,6 +11,7 @@
 </head>
 
 <body>
+<div class="container">
   <div>
     <h1>{{.First}}'s Account details</h1>
   </div>
@@ -19,14 +20,31 @@
     <img
       src="../assets/img/profile.png"
       alt="Profile picture"
-      style="width:50%"/>
+      style="width:40%"
+      class="img-rounded"/>
   </div>  <br><br>
   
   <div>
-    First Name: {{.First}}<br>
-    Last Name: {{.Last}}<br>
-    Username: {{.UserName}}<br>
-    Password: {{.Password}}<br>
+  <table class="table">
+  <tbody>
+    <tr>
+      <td>First Name:</td>
+      <td>{{.First}}</td>
+    </tr>
+    <tr>
+      <td>Last Name:</td>
+      <td>{{.Last}}</td>
+    </tr>
+    <tr>
+      <td>Username:</td>
+      <td> {{.UserName}}</td>
+    </tr>
+    <tr>
+      <td>Password:</td>
+      <td> {{.Password}}</td>
+    </tr>
+  </tbody>
+  </table>
   </div>
 
   <div>
@@ -34,5 +52,6 @@
     <h4><a href="/logout">log out</a></h4>
   </div>
 
+</div>
 </body>
 </html>
