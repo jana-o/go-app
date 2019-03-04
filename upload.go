@@ -22,13 +22,14 @@ func upload(w http.ResponseWriter, req *http.Request) {
 
 	c := getCookie(w, req)
 	if req.Method == http.MethodPost {
+		//multipart.File, *multipart.FileHeader, error
 		mf, fh, err := req.FormFile("nf")
 		if err != nil {
 			fmt.Println(err)
 		}
 		defer mf.Close()
-		// create sha for file name
 		ext := strings.Split(fh.Filename, ".")[1]
+		// create sha for file name
 		h := sha1.New()
 		io.Copy(h, mf)
 		fname := fmt.Sprintf("%x", h.Sum(nil)) + "." + ext
@@ -51,7 +52,7 @@ func upload(w http.ResponseWriter, req *http.Request) {
 	}
 	xs := strings.Split(c.Value, "|")
 	// sliced cookie values to only send over images
-	tpl.ExecuteTemplate(w, "index.gohtml", xs[1:])
+	tpl.ExecuteTemplate(w, "upload.gohtml", xs[1:])
 }
 
 func getCookie(w http.ResponseWriter, req *http.Request) *http.Cookie {

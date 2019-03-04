@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Upload</title>
-    <link rel="stylesheet" href="../public/css/main.css" />
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"
@@ -11,32 +10,25 @@
 </head>
 
 <body>
-  <div class="container">
-    <h1>Your Pictures:</h1>
+<div class="container">
+
+    <div>
+       {{range .}}
+       <img src="/public/pics/{{.}}" width="200px">
+       {{end}}
+    </div>
+
+    <h1>Upload pictures:</h1>
     <form method="post" enctype="multipart/form-data">
-      <input type="file" name="nf">
+      <input type="file" name="nf"><br>
       <button type="submit" class="btn btn-default">submit</button>
     </form>
-  </div>
-
- <div class="image">
-    <img
-        src="public/pics/gopher.png"
-        alt="gopher"
-        style="width:100%"
-        />
-  </div>
-  
-  <div>
-    {{range .}}
-    <img src="public/pics/{{.}}" width="200px">
-    {{end}}
-  </div>
 
   <div>
     <h4><a href="/">back</a></h4>
     <h4><a href="/logout">log out</a></h4>
   </div>
+</div>
 
 </body>
 </html>
