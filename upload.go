@@ -38,7 +38,7 @@ func upload(w http.ResponseWriter, req *http.Request) {
 		if err != nil {
 			fmt.Println(err)
 		}
-		path := filepath.Join(wd, "public", "pics", fname)
+		path := filepath.Join(wd, "public", "uploads", fname)
 		nf, err := os.Create(path)
 		if err != nil {
 			fmt.Println(err)

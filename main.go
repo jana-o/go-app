@@ -92,7 +92,6 @@ func signup(w http.ResponseWriter, req *http.Request) {
 		}
 		u = user{un, bs, f, l}
 		dbUsers[un] = u
-		// redirect
 		http.Redirect(w, req, "/", http.StatusSeeOther)
 		return
 	}

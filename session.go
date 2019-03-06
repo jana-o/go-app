@@ -27,6 +27,7 @@ func getUser(w http.ResponseWriter, req *http.Request) user {
 	return u
 }
 
+//alreadyLoggedIn checks if user is logged in
 func alreadyLoggedIn(req *http.Request) bool {
 	c, err := req.Cookie("session")
 	if err != nil {
