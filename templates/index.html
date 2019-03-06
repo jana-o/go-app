@@ -2,8 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Plant</title>
-    <link rel="stylesheet" href="../public/css/main.css" />
+    <title>Planting diary</title>
+    <link rel="stylesheet" href="../assets/css/main.css" />
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"
@@ -11,86 +11,64 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#">Plant diary</a>
-        </div>
-        {{if .First}}
-        <ul class="nav navbar-nav">
-          <li><a href="/upload">Upload new photos</a></li>
-          <li><a href="/account">Account</a></li>
-          <li><a href="/logout">Log out</a></li>
-        </ul>
-        
-        {{else}}
-        <ul class="nav navbar-nav">
-          <li><a href="/signup">Sign up now!</a></li>
-          <li><a href="/login">Log in</a></li>
-          {{ end }}
-        </ul>
-      </div>
-    </nav>
-
-    <div class="container">
-      <div class="row">
-        {{if .First}}
-        <div>
-          <h1>Hi, {{.First}}!</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus
-              beatae enim inventore ratione tempora!</p>
-          <a href="/upload">Upload new photos</a><br>
-        </div>
-      {{ end }}
-
-      <div class="row">
-        <h3>Growing avocado plants</h3>
-        <div class="column card border-light mb-3">
-          <img
-          src="assets/img/avocado1.jpeg"
-          alt="Avocado in glass"
-          style="width:100%"
-          class="card-img-top"
-          />
-          <div class="card-body">
-            <h4 id="element1" class="card-title">Week 4</h4>
-            <p class="card-text">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus
-              beatae enim inventore ratione tempora!
-            </p>
+    <div id="app">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid ">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">Plant diary</a>
           </div>
+          {{if .First}}
+          <ul class="nav navbar-nav">
+            <li><a href="/upload">Upload new photos</a></li>
+            <li><a href="/account">Account</a></li>
+            <li><a href="/logout">Log out</a></li>
+          </ul>
+
+          {{else}}
+          <ul class="nav navbar-nav">
+            <li><a href="/signup">Sign up now!</a></li>
+            <li><a href="/login">Log in</a></li>
+
+            {{
+              end
+            }}
+          </ul>
         </div>
-        <div class="column card">
-          <img
-            src="../assets/img/avocado2.jpeg"
-            alt="Avocado growing"
-            style="width:100%"
-            class="card-img-top"
-          />
-          <div class="card-body">
-            <h4 id="element2" class="card-title">Week 12</h4>
-            <p class="card-text">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Accusantium ad atque beatae deleniti dignissimos dolor
-              exercitationem facilis magni modi molestiae nisi, officiis quisquam
-              recusandae soluta voluptatum!
-            </p>
+      </nav>
+
+      <div class="container">
+        <div class="row">
+          <h3>Growing avocado plants</h3>
+          <div class="column card mb-6">
+            <img
+              src="assets/img/avocado1.jpeg"
+              alt="Avocado1"
+              style="width:100%"
+              class="card-img-top"
+            />
+            <div class="card-body">
+              <h4 id="element1" class="card-title">Week 4</h4>
+              <p class="card-text">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Accusamus beatae enim inventore ratione tempora!
+              </p>
+            </div>
           </div>
-        </div>
-        <div class="column card">
-          <img
-          src="/assets/img/avocado3.jpeg"
-          alt="Avocados"
-          style="width:100%"
-          class="card-img-top"
-          />
-          <div class="card-body">
-          <h4 id="element3" class="card-title">Week 36</h4>
-            <p class="card-text">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis
-              enim facere fuga illo ipsam nam nesciunt quo, ratione repudiandae
-              sunt velit voluptatibus!
-            </p>
+          <div class="column card mb-6">
+            <img
+              src="../assets/img/avocado2.jpeg"
+              alt="Avocado2"
+              style="width:100%"
+              class="card-img-top"
+            />
+            <div class="card-body">
+              <h4 id="element2" class="card-title">Week 12</h4>
+              <p class="card-text">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Accusantium ad atque beatae deleniti dignissimos dolor
+                exercitationem facilis magni modi molestiae nisi.
+              </p>
+            </div>
           </div>
         </div>
       </div>
