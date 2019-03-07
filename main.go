@@ -1,7 +1,6 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
 	"html/template"
 	"log"
@@ -18,15 +17,6 @@ type User struct {
 	First    string
 	Last     string
 }
-
-// type Photo struct {
-// 	ID  int64  `json:"photoId"`
-// 	Src string `json:"src"`
-// }
-
-// type PhotoCollection struct {
-// 	Photos []Photo `json:"items"`
-// }
 
 var tpl *template.Template
 var dbUsers = map[string]User{}      // user ID, user
@@ -157,7 +147,7 @@ func logout(w http.ResponseWriter, req *http.Request) {
 	c, _ := req.Cookie("session")
 	// delete the session
 	delete(dbSessions, c.Value)
-	// remove cookie  ____ COOKIE SHOULD NOT BE DELETED!!! ==========
+	// remove cookie
 	c = &http.Cookie{
 		Name:   "session",
 		Value:  "",
@@ -166,29 +156,4 @@ func logout(w http.ResponseWriter, req *http.Request) {
 	http.SetCookie(w, c)
 
 	http.Redirect(w, req, "/login", http.StatusSeeOther)
-}
-
-// Database
-func initialiseDatabase(filepath string) *sql.DB {
-	db, err := sql.Open("sqlite3", filepath)
-
-	if err != nil || db == nil {
-		panic("Error connecting to database")
-	}
-
-	return db
-}
-
-func migrateDatabase(db *sql.DB) {
-	sql := `
-        CREATE TABLE IF NOT EXISTS photos(
-                id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-                src VARCHAR NOT NULL
-        );
-   `
-	_, err := db.Exec(sql)
-
-	if err != nil {
-		panic(err)
-	}
 }
