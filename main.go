@@ -192,30 +192,3 @@ func migrateDatabase(db *sql.DB) {
 		panic(err)
 	}
 }
-
-// func getPhotos(db *sql.DB) *PhotoCollection {
-
-// 	rows, err := db.Query("SELECT * FROM photos")
-
-// 	if err != nil {
-// 		panic(err)
-// 	}
-
-// 	defer rows.Close()
-
-// 	result := PhotoCollection{}
-
-// 	for rows.Next() {
-// 		photo := Photo{}
-// 		err2 := rows.Scan(&photo.ID, &photo.Src)
-
-// 		if err2 != nil {
-// 			panic(err2)
-// 		}
-
-// 		result.Photos = append(result.Photos, photo)
-// 	}
-
-// 	return *result
-
-// }
