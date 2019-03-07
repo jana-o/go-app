@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link
+    rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"
+  />
+</head>
+
+<body>
+
+
+  <div class="container">
+    <h4>Upload pictures</h4>
+    
+    <form method="post" enctype="multipart/form-data">
+      <input type="file" name="file" /><br />
+      <button type="submit" class="btn btn-default">submit</button>
+    </form>
+
+  {{range .}} 
+  <img src="/public/pics/{{.}}" width="400px">
+  {{end}}
+
+    <h4><a href="/">back</a></h4>
+    <h4><a href="/logout">log out</a></h4>
+
+  </div>
+
+</body>
+</html>

@@ -6,7 +6,7 @@ import (
 	"github.com/satori/go.uuid"
 )
 
-func getUser(w http.ResponseWriter, req *http.Request) user {
+func getUser(w http.ResponseWriter, req *http.Request) User {
 	// get cookie
 	c, err := req.Cookie("session")
 	if err != nil {
@@ -20,7 +20,7 @@ func getUser(w http.ResponseWriter, req *http.Request) user {
 	http.SetCookie(w, c)
 
 	// if user exists already, get user
-	var u user
+	var u User
 	if un, ok := dbSessions[c.Value]; ok {
 		u = dbUsers[un]
 	}

@@ -7,49 +7,43 @@ import (
 	"log"
 	"net/http"
 
-	_ "github.com/mattn/go-sqlite3"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/satori/go.uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
-type user struct {
-	UserName string `json:"userName"`
-	Password []byte `json:"password"`
-	First    string `json:"first"`
-	Last     string `json:"last"`
-	ID       int64  `json:"id"`
+type User struct {
+	UserName string
+	Password []byte
+	First    string
+	Last     string
 }
 
-type Photo struct {
-	ID  int64  `json:"id"`
-	Src string `json:"src"`
-}
+// type Photo struct {
+// 	ID  int64  `json:"photoId"`
+// 	Src string `json:"src"`
+// }
 
-type PhotoCollection struct {
-	Photos []Photo `json:"items"`
-}
+// type PhotoCollection struct {
+// 	Photos []Photo `json:"items"`
+// }
 
 var tpl *template.Template
-var dbUsers = map[string]user{}      // user ID, user
+var dbUsers = map[string]User{}      // user ID, user
 var dbSessions = map[string]string{} // session ID, user ID
 
 func init() {
 	tpl = template.Must(template.ParseGlob("templates/*"))
 	bs, _ := bcrypt.GenerateFromPassword([]byte("password"), bcrypt.MinCost)
-	dbUsers["test@test.com"] = user{"test@test.com", bs, "Jana", "O", 1234}
+	dbUsers["test@test.com"] = User{"test@test.com", bs, "Jana", "O"}
 }
 
 func main() {
-
-	// Database
-	db := initialiseDatabase("database/database.sqlite")
-	migrateDatabase(db)
-
 	//Routes
 	http.HandleFunc("/", index)
-	// http.HandleFunc("/upload", upload)
+	http.HandleFunc("/upload", upload)
 	http.HandleFunc("/account", account)
-	// http.HandleFunc("/signup", signup)
+	http.HandleFunc("/signup", signup)
 	http.HandleFunc("/login", login)
 	http.HandleFunc("/logout", logout)
 
@@ -76,12 +70,12 @@ func account(w http.ResponseWriter, req *http.Request) {
 	tpl.ExecuteTemplate(w, "account.gohtml", u)
 }
 
-func signup(w http.ResponseWriter, req *http.Request, db *sql.DB) {
+func signup(w http.ResponseWriter, req *http.Request) {
 	if alreadyLoggedIn(req) {
 		http.Redirect(w, req, "/", http.StatusSeeOther)
 		return
 	}
-	var u user
+	var u User
 	// process form submission
 	if req.Method == http.MethodPost {
 		// get form values
@@ -109,34 +103,9 @@ func signup(w http.ResponseWriter, req *http.Request, db *sql.DB) {
 			http.Error(w, "Internal server error", http.StatusInternalServerError)
 			return
 		}
-		//save user in DB
-		stmt, err := db.Prepare("INSERT INTO users (src) VALUES(?)")
-		if err != nil {
-			panic(err)
-		}
 
-		defer stmt.Close()
-
-		result, err := stmt.Exec(req.FormValue)
-		if err != nil {
-			panic(err)
-		}
-
-		userID, err := result.LastInsertId()
-		if err != nil {
-			panic(err)
-		}
-
-		user := user{
-			UserName: un,
-			Password: bs,
-			First:    f,
-			Last:     l,
-			ID:       userID,
-		}
-
-		// u = user{un, bs, f, l, id}
-		dbUsers[un] = user
+		u = User{un, bs, f, l}
+		dbUsers[un] = u
 		http.Redirect(w, req, "/", http.StatusSeeOther)
 		return
 	}
@@ -148,7 +117,7 @@ func login(w http.ResponseWriter, req *http.Request) {
 		http.Redirect(w, req, "/", http.StatusSeeOther)
 		return
 	}
-	var u user
+	var u User
 	// process form submission
 	if req.Method == http.MethodPost {
 		un := req.FormValue("username")

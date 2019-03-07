@@ -28,13 +28,17 @@
           <ul class="nav navbar-nav">
             <li><a href="/signup">Sign up now!</a></li>
             <li><a href="/login">Log in</a></li>
-
-            {{
-              end
-            }}
           </ul>
+          {{ end }}
         </div>
       </nav>
+
+      <div class="container">
+        {{if .First}}
+        <div class="row"></div>
+        <h1>Hi, {{.First}}!</h1>
+      </div>
+      {{ end }}
 
       <div class="container">
         <div class="row">
@@ -42,7 +46,7 @@
           <div class="column card mb-6">
             <img
               src="assets/img/avocado1.jpeg"
-              alt="Avocado1"
+              alt="Avocado12"
               style="width:100%"
               class="card-img-top"
             />

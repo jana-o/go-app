@@ -2,7 +2,6 @@ package main
 
 import (
 	"crypto/sha1"
-	"database/sql"
 	"fmt"
 	"io"
 	"net/http"
@@ -14,14 +13,14 @@ import (
 	"github.com/satori/go.uuid"
 )
 
-//Upload
-func upload(w http.ResponseWriter, req *http.Request, db *sql.DB) {
+func upload(w http.ResponseWriter, req *http.Request) {
 	u := getUser(w, req)
 	if !alreadyLoggedIn(req) {
 		http.Redirect(w, req, "/", http.StatusSeeOther)
 		return
 	}
-	tpl.ExecuteTemplate(w, "upload.gohtml", u)
+	// tpl.ExecuteTemplate(w, "upload.gohtml", u)
+	fmt.Println(u)
 
 	c := getCookie(w, req)
 	if req.Method == http.MethodPost {
@@ -38,41 +37,20 @@ func upload(w http.ResponseWriter, req *http.Request, db *sql.DB) {
 		h := sha1.New()
 		io.Copy(h, mf)
 		fname := fmt.Sprintf("%x", h.Sum(nil)) + "." + ext
+		//example: 67f19a7a-0b1f-49a9-ba9b-3f39b843c1df|c2ac15cca4bb13e939ac05cf3e49a8f0818894b4.jpg
 
-		// create new file in working directory
+		// create new file use working directory
 		wd, err := os.Getwd()
 		if err != nil {
 			fmt.Println(err)
 		}
 		path := filepath.Join(wd, "public", "uploads", fname)
-		fileSrc := "http://127.0.0.1:8080/uploads/" + fh.Filename
+		// fileSrc := "http://127.0.0.1:8080/uploads/" + fh.Filename
 
 		file, err := os.Create(path)
 		if err != nil {
 			fmt.Println(err)
 		}
-		//saving into db
-		stmt, err := db.Prepare("INSERT INTO photos (src) VALUES(?)")
-		if err != nil {
-			panic(err)
-		}
-
-		defer stmt.Close()
-		result, err := stmt.Exec(fileSrc)
-		if err != nil {
-			panic(err)
-		}
-		//id from db package
-		photoID, err := result.LastInsertId()
-		if err != nil {
-			panic(err)
-		}
-
-		photo := Photo{
-			ID:  photoID,
-			Src: fileSrc,
-		}
-
 		defer file.Close()
 
 		mf.Seek(0, 0)
